@@ -2,9 +2,15 @@
 /*
 Plugin Name: Neo Copykey Alert
 Description: 記事の右クリックや選択、ソースコード表示時などに警告を出す + HTML難読化
-Version: 0.1
+Version: 0.2
 Author: Nano Yozakura
 */
+
+add_action('wp_head', function() {
+    ?>
+    <script type="text/javascript">var NeoCopykeyAjax="<?php echo plugins_url('ajax-handler.php', __FILE__);?>";</script>
+    <?php
+}, 99);
 
 // JavaScriptの読み込み（キャッシュ無効化つき）
 function add_custom_alert_script() {
@@ -12,48 +18,10 @@ function add_custom_alert_script() {
     $script_url = plugins_url('Neo-Copykey-Alert.js', __FILE__);
     $version = file_exists($script_path) ? filemtime($script_path) : false;
 
-//    $css_file = plugin_dir_path(__FILE__) . 'Neo-Custom-Alert.css';
-//    $css_url = plugin_dir_url(__FILE__) . 'Neo-Custom-Alert.css';
-
-    // タイムスタンプをクエリ文字列として付加
-//    wp_enqueue_style(
-//        'custom-alert-script', 
-//        $css_url,
-//        array(), // 依存関係なし
-//        file_exists($css_file) ? filemtime($css_file) : false // タイムスタンプをバージョンに使用
-//    );
-
     if(!is_user_logged_in()) {
         wp_enqueue_script('custom-alert-script', $script_url, array('jquery'), $version, true);
     }
 }
-
-// HTML難読化
-function obfuscate_html_output($buffer) {
-    // コメント削除
-    $buffer = preg_replace('/<!--(.|\s)*?-->/', '', $buffer);
-    // 改行・タブ・スペースを削除
-    $buffer = preg_replace('/\s+/', ' ', $buffer);
-    // エンティティをエスケープして難読化
-    $buffer = str_replace(
-        array('<', '>', '"', "'"),
-        array('&#60;', '&#62;', '&#34;', '&#39;'),
-        $buffer
-    );
-
-    return $buffer;
-}
-
-// 出力バッファリングを開始して難読化
-function start_html_obfuscation() {
-    ob_start('obfuscate_html_output');
-}
-
-function end_html_obfuscation() {
-    ob_end_flush();
-}
-//add_action('template_redirect', 'start_html_obfuscation');
-//add_action('shutdown', 'end_html_obfuscation');
 add_action('wp_enqueue_scripts', 'add_custom_alert_script');
 
 // メニュー項目を管理画面に追加
@@ -153,6 +121,4 @@ function sanitize_output($buffer) {
 	$buffer = preg_replace($search, $replace, $buffer);
 	return $buffer;
 }
-//if(! is_user_logged_in() ) {
 ob_start("sanitize_output");
-//}

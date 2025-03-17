@@ -42,10 +42,12 @@
         e.preventDefault();
     });
 
+
     // IPアドレスをサーバーに送信
     function sendIpToServer(Keys) {
         $.ajax({
-            url: '/wp-content/plugins/Neo-Copykey-Alert/ajax-handler.php', // カスタム PHP ファイルにリクエスト
+            url: NeoCopykeyAjax,
+            //url: '/wp-content/plugins/Neo-Copykey-Alert/ajax-handler.php', // カスタム PHP ファイルにリクエスト
             type: 'POST',
             data: {
                 security: 'papu', // セキュリティキーを追加
