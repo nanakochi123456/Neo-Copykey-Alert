@@ -1,43 +1,43 @@
 (function($) {
-    // F12キーのアラート
+    // F12
     document.addEventListener('keydown', (event) => {
         if (event.key === 'F12') {
             sendIpToServer('F12');
-            event.preventDefault(); // デフォルトの動作を無効化（開発者ツールの起動を防止）
+            event.preventDefault();
         }
     });
 
-    // Ctrl + Shift + Iキーのアラート
+    // Ctrl+Shift+I
     document.addEventListener('keydown', (event) => {
         if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i')) {
             sendIpToServer('Ctrl+Shift+I');
-            event.preventDefault(); // デフォルトの動作を無効化（開発者ツールの起動を防止）
+            event.preventDefault();
         }
     });
 
-    // Ctrl + Shift + Jキーのアラート
+    // Ctrl+Shift+J
     document.addEventListener('keydown', (event) => {
         if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
             sendIpToServer('Ctrl+Shift+J');
-            event.preventDefault(); // デフォルトの動作を無効化（開発者ツールの起動を防止）
+            event.preventDefault();
         }
     });
 
-    // Ctrl + Uキーのアラート
+    // Ctrl+U
     document.addEventListener('keydown', (event) => {
         if (event.ctrlKey && (event.key === 'U' || event.key === 'u')) {
             sendIpToServer('Ctrl+U');
-            event.preventDefault(); // デフォルトの動作を無効化（開発者ツールの起動を防止）
+            event.preventDefault();
         }
     });
 
-    // 右クリックを禁止してアラートを表示
+    // 右クリック
     $(document).on('contextmenu', function(e) {
         sendIpToServer('Right Click');
         e.preventDefault();
     });
 
-    // テキスト選択時にアラートを表示
+    // テキスト選択禁止のみ
     $(document).on('selectstart', function(e) {
         e.preventDefault();
     });
@@ -47,16 +47,15 @@
     function sendIpToServer(Keys) {
         $.ajax({
             url: NeoCopykeyAjax,
-            //url: '/wp-content/plugins/Neo-Copykey-Alert/ajax-handler.php', // カスタム PHP ファイルにリクエスト
             type: 'POST',
             data: {
-                security: 'papu', // セキュリティキーを追加
-                url: location.href, // 現在のURL
-		key: Keys, // 押されたキー
+                security: 'papu',
+                url: location.href,
+		key: Keys,
             },
             success: function(response) {
                 alert(response);
-                location.href="https://ck.773.moe/c";
+                location.href=NeoCopykeyCk;
             }
         });
     }

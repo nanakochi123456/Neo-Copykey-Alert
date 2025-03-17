@@ -35,5 +35,19 @@ $wpdb->insert($table_name, array(
 ));
 
 //echo 'Saved IP address and infomations.';
-echo "引用せず掲載したら気軽に訴訟するなの\n\n以下の情報がサーバーに送信されたなの\n". $user_ip . "\n". $_POST["url"] . "\n" . $_POST['key'];
+
+define('DOING_AJAX', true);
+require_once($_SERVER['DOCUMENT_ROOT'] . '/wp-load.php'); // WordPress の読み込み
+
+$value = get_option('neo_copykey_alert_message', '以下の情報がサーバーに送信されました\nあなたのIPアドレス:$IP\nURL:$URL\nあなたの押下したキー:$KEY');
+
+if ($value === false) {
+    $value = '以下の情報がサーバーに送信されました\nIPアドレス:$IP\nURL:$URL\n押下したキー:$KEY';
+}
+
+$value = str_replace('$IP', $user_ip, $value);
+$value = str_replace('$URL', $_POST["url"], $value);
+$value = str_replace('$KEY', $_POST["key"], $value);
+$value = str_replace('\\n', "\n", $value);
+echo $value;
 

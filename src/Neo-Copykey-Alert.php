@@ -2,13 +2,13 @@
 /*
 Plugin Name: Neo Copykey Alert
 Description: 記事の右クリックや選択、ソースコード表示時などに警告を出す + HTML難読化
-Version: 0.21
+Version: 0.4
 Author: Nano Yozakura
 */
 
 add_action('wp_head', function() {
     ?>
-    <script type="text/javascript">var NeoCopykeyAjax="<?php echo plugins_url('ajax-handler.php', __FILE__);?>";</script>
+    <script>var NeoCopykeyAjax="<?php echo plugins_url('Neo-ajax-handler.php', __FILE__);?>",NeoCopykeyCk="<?php echo plugins_url('Neo-Ck.php', __FILE__);?>";</script>
     <?php
 }, 99);
 
@@ -169,6 +169,73 @@ EOM;
 
 }
 
+
+// 設定ページを追加
+add_action('admin_menu', function() {
+    add_options_page(
+        'Neo Copykey Alert設定',
+        'Neo Copykey Alert',
+        'manage_options',
+        'neo-copykey-settings',
+        'render_neo_copykey_settings_page'
+    );
+});
+
+// 設定ページの内容を表示
+function render_neo_copykey_settings_page() {
+    ?>
+    <div class="wrap">
+        <h1>Neo Copykey Alert設定</h1>
+        <form method="post" action="options.php">
+            <?php
+            settings_fields('neo_copykey_settings_group');
+            do_settings_sections('neo-copykey-settings');
+            submit_button();
+            ?>
+        </form>
+    </div>
+    <?php
+}
+
+// 設定を登録
+// 設定を登録
+add_action('admin_init', function() {
+    // 転送先URL
+    register_setting('neo_copykey_settings_group', 'neo_copykey_redirect_url');
+    add_settings_field(
+        'neo_copykey_redirect_url',
+        '転送先 URL',
+        function() {
+            $value = esc_url(get_option('neo_copykey_redirect_url', 'https://www.google.com/'));
+            echo '<input type="url" name="neo_copykey_redirect_url" value="' . $value . '" class="regular-text">';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // Alert メッセージ
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_message');
+    add_settings_field(
+        'neo_copykey_alert_message',
+        '警告メッセージ',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_message', '以下の情報がサーバーに送信されました\nあなたのIPアドレス:$IP\nURL:$URL\nあなたの押下したキー:$KEY'));
+            echo '<input type="text" name="neo_copykey_alert_message" value="' . $value . '" class="regular-text">';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // セクションの追加
+    add_settings_section(
+        'neo_copykey_section',
+        '基本設定',
+        function() {
+            echo '右クリックやソースコード表示時に転送する URL を設定します。<br>URLを変更した場合ブラウザのキャッシュをすべて削除して動作確認をして下さい。<br><br>警告メッセージにはHTMLは使用できません。以下の文字が使用できます<table><tr><td>\n</td><td>改行</td></tr><tr><td>$IP</td><td>IPアドレス</td></tr><tr><td>$URL</td><td>URL</td></tr><tr><td>$KEY</td><td>押下されたキー</td></tr></table>';
+        },
+        'neo-copykey-settings'
+    );
+});
 
 
 // HTML圧縮
