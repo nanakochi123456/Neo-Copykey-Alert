@@ -2,7 +2,7 @@
 /*
 Plugin Name: Neo Copykey Alert
 Description: 記事の右クリックや選択、ソースコード表示時などに警告を出す + HTML難読化
-Version: 0.52
+Version: 0.53
 Author: Nano Yozakura
 */
 
@@ -346,7 +346,7 @@ add_action('admin_init', function() {
         'neo_copykey_section',
         '基本設定',
         function() {
-            echo '右クリックやソースコード表示時に転送する URL を設定します。<br>URLを変更した場合ブラウザのキャッシュをすべて削除して動作確認をして下さい。<br><br>警告メッセージにはHTMLは使用できません。以下の文字が使用できます<table><tr><td>\n</td><td>改行</td></tr><tr><td>$IP</td><td>IPアドレス</td></tr><tr><td>$URL</td><td>URL</td></tr><tr><td>$KEY</td><td>押下されたキー</td></tr></table>';
+            echo '右クリックやソースコード表示時に転送する URL を設定します。<br><br>警告メッセージにはHTMLは使用できません。以下の文字が使用できます<table><tr><td>\n</td><td>改行</td></tr><tr><td>$IP</td><td>IPアドレス</td></tr><tr><td>$URL</td><td>URL</td></tr><tr><td>$KEY</td><td>押下されたキー</td></tr></table>';
         },
         'neo-copykey-settings'
     );

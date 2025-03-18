@@ -2,7 +2,7 @@
 // IP アドレス保存処理
 
 // セキュリティチェック: リファラーの確認などを実施する
-if (!isset($_POST['security']) || $_POST['security'] !== 'papu') {
+if (!isset($_POST['sec']) || $_POST['sec'] !== 'papu') {
     die('403 Forbidden');
 }
 

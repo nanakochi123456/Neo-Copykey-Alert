@@ -2,47 +2,59 @@
     var	  kd='keydown'
 	, NF=NeoCopykeyFlg
 	, CT='Ctrl+'
-	, SF='Shift+';
+	, SF='Shift+'
+	, unixTime = Math.floor(Date.now() / 1000);
 
-    // F12
-    if(NF.includes('f')) {
-        document.addEventListener(kd, (event) => {
+    document.addEventListener(kd, (event) => {
+
+        // F12
+        if(NF.includes('f')) {
             if (event.key === 'F12') {
                 sendIpToServer('F12');
                 event.preventDefault();
             }
-        });
-    }
+        }
 
-    // Ctrl+Shift+I
-    if(NF.includes('i')) {
-        document.addEventListener(kd, (event) => {
+        // Ctrl+Shift+I
+        if(NF.includes('i')) {
             if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i')) {
                 sendIpToServer(CT+SF+'I');
                 event.preventDefault();
             }
-        });
-    }
+        }
 
-    // Ctrl+Shift+J
-    if(NF.includes('j')) {
-        document.addEventListener(kd, (event) => {
+        // Ctrl+Shift+I
+        if(NF.includes('i')) {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i')) {
+                sendIpToServer(CT+SF+'I');
+                event.preventDefault();
+            }
+        }
+
+        // Ctrl+Shift+J
+        if(NF.includes('j')) {
             if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
                 sendIpToServer(CT+SF+'J');
                 event.preventDefault();
             }
-        });
-    }
+        }
 
-    // Ctrl+U
-    if(NF.includes('u')) {
-        document.addEventListener(kd, (event) => {
+        // Ctrl+U
+        if(NF.includes('u')) {
             if (event.ctrlKey && (event.key === 'U' || event.key === 'u')) {
                 sendIpToServer(CT+'U');
                 event.preventDefault();
             }
-        });
-    }
+        }
+
+        // Ctrl+P
+        if(NF.includes('p')) {
+            if (event.ctrlKey && (event.key === 'P' || event.key === 'p')) {
+                sendIpToServer(CT+'P');
+                e.preventDefault();
+            }
+        }
+    });
 
     // 右クリック
     if(NF.includes('r')) {
@@ -59,30 +71,20 @@
         });
     }
 
-    // Ctrl+P
-    if(NF.includes('p')) {
-        document.addEventListener(kd, (event) => {
-            if (event.ctrlKey && (event.key === 'P' || event.key === 'p')) {
-                sendIpToServer(CT+'P');
-                e.preventDefault();
-            }
-        });
-    }
-
     // IPアドレスをサーバーに送信
     function sendIpToServer(Keys) {
         $.ajax({
             url: NeoCopykeyAjax,
             type: 'POST',
             data: {
-                security: 'papu',
+                sec: 'papu',
                 url: location.href,
 		key: Keys,
             },
             success: function(response) {
-                // エスケープされたメッセージをalertで表示
+                // alertで表示後URL転送
                 alert(escapeHtml(response));
-                location.href=NeoCopykeyCk;
+                location.href = NeoCopykeyCk + "?tm=" + unixTime;
             }
         });
     }
