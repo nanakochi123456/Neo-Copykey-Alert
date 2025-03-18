@@ -2,7 +2,7 @@
 /*
 Plugin Name: Neo Copykey Alert
 Description: 記事の右クリックや選択、ソースコード表示時などに警告を出す + HTML難読化
-Version: 0.51
+Version: 0.52
 Author: Nano Yozakura
 */
 

@@ -1,8 +1,12 @@
 (function($) {
-    // F12
+    var	  kd='keydown'
+	, NF=NeoCopykeyFlg
+	, CT='Ctrl+'
+	, SF='Shift+';
 
-    if(NeoCopykeyFlg.includes('f')) {
-        document.addEventListener('keydown', (event) => {
+    // F12
+    if(NF.includes('f')) {
+        document.addEventListener(kd, (event) => {
             if (event.key === 'F12') {
                 sendIpToServer('F12');
                 event.preventDefault();
@@ -11,37 +15,37 @@
     }
 
     // Ctrl+Shift+I
-    if(NeoCopykeyFlg.includes('i')) {
-        document.addEventListener('keydown', (event) => {
+    if(NF.includes('i')) {
+        document.addEventListener(kd, (event) => {
             if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i')) {
-                sendIpToServer('Ctrl+Shift+I');
+                sendIpToServer(CT+SF+'I');
                 event.preventDefault();
             }
         });
     }
 
     // Ctrl+Shift+J
-    if(NeoCopykeyFlg.includes('j')) {
-        document.addEventListener('keydown', (event) => {
+    if(NF.includes('j')) {
+        document.addEventListener(kd, (event) => {
             if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
-                sendIpToServer('Ctrl+Shift+J');
+                sendIpToServer(CT+SF+'J');
                 event.preventDefault();
             }
         });
     }
 
     // Ctrl+U
-    if(NeoCopykeyFlg.includes('u')) {
-        document.addEventListener('keydown', (event) => {
+    if(NF.includes('u')) {
+        document.addEventListener(kd, (event) => {
             if (event.ctrlKey && (event.key === 'U' || event.key === 'u')) {
-                sendIpToServer('Ctrl+U');
+                sendIpToServer(CT+'U');
                 event.preventDefault();
             }
         });
     }
 
     // 右クリック
-    if(NeoCopykeyFlg.includes('r')) {
+    if(NF.includes('r')) {
         $(document).on('contextmenu', function(e) {
             sendIpToServer('Right Click');
             e.preventDefault();
@@ -49,17 +53,17 @@
     }
 
     // テキスト選択禁止のみ
-    if(NeoCopykeyFlg.includes('s')) {
+    if(NF.includes('s')) {
         $(document).on('selectstart', function(e) {
             e.preventDefault();
         });
     }
 
     // Ctrl+P
-    if(NeoCopykeyFlg.includes('p')) {
-        document.addEventListener('keydown', (event) => {
+    if(NF.includes('p')) {
+        document.addEventListener(kd, (event) => {
             if (event.ctrlKey && (event.key === 'P' || event.key === 'p')) {
-                sendIpToServer('Ctrl+P');
+                sendIpToServer(CT+'P');
                 e.preventDefault();
             }
         });
@@ -85,16 +89,16 @@
 
     // JavaScriptでエスケープする関数
     function escapeHtml(str) {
-        var element = document.createElement('div');
+        var e = document.createElement('div');
         if (str) {
-            element.innerText = str;
-            element.textContent = str;
+            e.innerText = str;
+            e.textContent = str;
         }
-        return element.innerHTML;
+        return e.innerHTML;
     }
 
     // デバッガ妨害
-    if(NeoCopykeyFlg.includes('d')) {
+    if(NF.includes('d')) {
         setInterval(function() {
             console.clear();
             debugger;
