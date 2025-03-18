@@ -2,7 +2,7 @@
 /*
 Plugin Name: Neo Copykey Alert
 Description: 記事の右クリックや選択、ソースコード表示時などに警告を出す + HTML難読化
-Version: 0.42
+Version: 0.5
 Author: Nano Yozakura
 */
 
@@ -11,9 +11,17 @@ if (!defined('ABSPATH')) {
 }
 
 add_action('wp_head', function() {
+    $html="";
+    if(get_option('neo_copykey_alert_f12', '1') === '1') { $html.="f";}
+    if(get_option('neo_copykey_alert_i', '1') === '1')   { $html.="i";}
+    if(get_option('neo_copykey_alert_j', '1') === '1')   { $html.="j";}
+    if(get_option('neo_copykey_alert_u', '1') === '1')   { $html.="u";}
+    if(get_option('neo_copykey_alert_r', '1') === '1')   { $html.="r";}
+    if(get_option('neo_copykey_alert_s', '1') === '1')   { $html.="s";}
+    if(get_option('neo_copykey_alert_p', '0') === '1')   { $html.="p";}
     ?>
-<script>var NeoCopykeyAjax="<?php echo plugins_url('Neo-ajax-handler.php', __FILE__);?>",NeoCopykeyCk="<?php echo plugins_url('Neo-Ck.php', __FILE__);?>";</script>
-    <?php
+<script>var NeoCopykeyAjax="<?php echo plugins_url('Neo-ajax-handler.php', __FILE__);?>",NeoCopykeyCk="<?php echo plugins_url('Neo-Ck.php', __FILE__);?>",NeoCopykeyFlg="<?php echo $html?>";</script>
+        <?php
 }, 99);
 
 // JavaScriptの読み込み（キャッシュ無効化つき）
@@ -223,6 +231,97 @@ add_action('admin_init', function() {
         function() {
             $value = esc_html(get_option('neo_copykey_alert_message', '以下の情報がサーバーに送信されました\nあなたのIPアドレス:$IP\nURL:$URL\nあなたの押下したキー:$KEY'));
             echo '<input type="text" name="neo_copykey_alert_message" value="' . $value . '" class="regular-text">';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // F12
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_f12');
+    add_settings_field(
+        'neo_copykey_alert_f12',
+        'F12 (debug mode)',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_f12', '1'));
+            echo '<input type="checkbox" name="neo_copykey_alert_f12" value="1"' . ($value === '1' ? ' checked' : '') . '>';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // Ctrl+Shift+I
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_i');
+    add_settings_field(
+        'neo_copykey_alert_i',
+        'Ctrl+Shift+I (debug mode)',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_i', '1'));
+            echo '<input type="checkbox" name="neo_copykey_alert_i" value="1"' . ($value === '1' ? ' checked' : '') . '>';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // Ctrl+Shift+J
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_j');
+    add_settings_field(
+        'neo_copykey_alert_j',
+        'Ctrl+Shift+J (console)',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_j', '1'));
+            echo '<input type="checkbox" name="neo_copykey_alert_j" value="1"' . ($value === '1' ? ' checked' : '') . '>';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // Ctrl+U
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_u');
+    add_settings_field(
+        'neo_copykey_alert_u',
+        'Ctrl+U (HTML source view)',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_u', '1'));
+            echo '<input type="checkbox" name="neo_copykey_alert_u" value="1"' . ($value === '1' ? ' checked' : '') . '>';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // Right Click
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_r');
+    add_settings_field(
+        'neo_copykey_alert_r',
+        'Right Click',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_r', '1'));
+            echo '<input type="checkbox" name="neo_copykey_alert_r" value="1"' . ($value === '1' ? ' checked' : '') . '>';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // selection
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_s');
+    add_settings_field(
+        'neo_copykey_alert_s',
+        'Text Selection (Inhibition only)',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_s', '1'));
+            echo '<input type="checkbox" name="neo_copykey_alert_s" value="1"' . ($value === '1' ? ' checked' : '') . '>';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // Ctrl+P
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_p');
+    add_settings_field(
+        'neo_copykey_alert_p',
+        'Ctrl+P (Print)',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_p', '0'));
+            echo '<input type="checkbox" name="neo_copykey_alert_p" value="1"' . ($value === '1' ? ' checked' : '') . '> ブラウザによってはうまく動作しません';
         },
         'neo-copykey-settings',
         'neo_copykey_section'

@@ -1,46 +1,69 @@
 (function($) {
     // F12
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'F12') {
-            sendIpToServer('F12');
-            event.preventDefault();
-        }
-    });
+
+    if(NeoCopykeyFlg.includes('f')) {
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'F12') {
+                sendIpToServer('F12');
+                event.preventDefault();
+            }
+        });
+    }
 
     // Ctrl+Shift+I
-    document.addEventListener('keydown', (event) => {
-        if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i')) {
-            sendIpToServer('Ctrl+Shift+I');
-            event.preventDefault();
-        }
-    });
+    if(NeoCopykeyFlg.includes('i')) {
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i')) {
+                sendIpToServer('Ctrl+Shift+I');
+                event.preventDefault();
+            }
+        });
+    }
 
     // Ctrl+Shift+J
-    document.addEventListener('keydown', (event) => {
-        if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
-            sendIpToServer('Ctrl+Shift+J');
-            event.preventDefault();
-        }
-    });
+    if(NeoCopykeyFlg.includes('j')) {
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j')) {
+                sendIpToServer('Ctrl+Shift+J');
+                event.preventDefault();
+            }
+        });
+    }
 
     // Ctrl+U
-    document.addEventListener('keydown', (event) => {
-        if (event.ctrlKey && (event.key === 'U' || event.key === 'u')) {
-            sendIpToServer('Ctrl+U');
-            event.preventDefault();
-        }
-    });
+    if(NeoCopykeyFlg.includes('u')) {
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && (event.key === 'U' || event.key === 'u')) {
+                sendIpToServer('Ctrl+U');
+                event.preventDefault();
+            }
+        });
+    }
 
     // 右クリック
-    $(document).on('contextmenu', function(e) {
-        sendIpToServer('Right Click');
-        e.preventDefault();
-    });
+    if(NeoCopykeyFlg.includes('r')) {
+        $(document).on('contextmenu', function(e) {
+            sendIpToServer('Right Click');
+            e.preventDefault();
+        });
+    }
 
     // テキスト選択禁止のみ
-    $(document).on('selectstart', function(e) {
-        e.preventDefault();
-    });
+    if(NeoCopykeyFlg.includes('s')) {
+        $(document).on('selectstart', function(e) {
+            e.preventDefault();
+        });
+    }
+
+    // Ctrl+P
+    if(NeoCopykeyFlg.includes('p')) {
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && (event.key === 'P' || event.key === 'p')) {
+                sendIpToServer('Ctrl+P');
+                e.preventDefault();
+            }
+        });
+    }
 
     // IPアドレスをサーバーに送信
     function sendIpToServer(Keys) {
