@@ -2,7 +2,7 @@
 /*
 Plugin Name: Neo Copykey Alert
 Description: 記事の右クリックや選択、ソースコード表示時などに警告を出す + HTML難読化
-Version: 0.5
+Version: 0.51
 Author: Nano Yozakura
 */
 
@@ -19,6 +19,7 @@ add_action('wp_head', function() {
     if(get_option('neo_copykey_alert_r', '1') === '1')   { $html.="r";}
     if(get_option('neo_copykey_alert_s', '1') === '1')   { $html.="s";}
     if(get_option('neo_copykey_alert_p', '0') === '1')   { $html.="p";}
+    if(get_option('neo_copykey_alert_d', '1') === '1')   { $html.="d";}
     ?>
 <script>var NeoCopykeyAjax="<?php echo plugins_url('Neo-ajax-handler.php', __FILE__);?>",NeoCopykeyCk="<?php echo plugins_url('Neo-Ck.php', __FILE__);?>",NeoCopykeyFlg="<?php echo $html?>";</script>
         <?php
@@ -26,8 +27,8 @@ add_action('wp_head', function() {
 
 // JavaScriptの読み込み（キャッシュ無効化つき）
 function add_custom_alert_script() {
-    $script_path = plugin_dir_path(__FILE__) . 'Neo-Copykey-Alert.js';
-    $script_url = plugins_url('Neo-Copykey-Alert.js', __FILE__);
+    $script_path = plugin_dir_path(__FILE__) . 'Neo-Copykey-Alert.min.js';
+    $script_url = plugins_url('Neo-Copykey-Alert.min.js', __FILE__);
     $version = file_exists($script_path) ? filemtime($script_path) : false;
 
     if(!is_user_logged_in()) {
@@ -322,6 +323,19 @@ add_action('admin_init', function() {
         function() {
             $value = esc_html(get_option('neo_copykey_alert_p', '0'));
             echo '<input type="checkbox" name="neo_copykey_alert_p" value="1"' . ($value === '1' ? ' checked' : '') . '> ブラウザによってはうまく動作しません';
+        },
+        'neo-copykey-settings',
+        'neo_copykey_section'
+    );
+
+    // debugger
+    register_setting('neo_copykey_settings_group', 'neo_copykey_alert_d');
+    add_settings_field(
+        'neo_copykey_alert_d',
+        'Debugger interference',
+        function() {
+            $value = esc_html(get_option('neo_copykey_alert_d', '1'));
+            echo '<input type="checkbox" name="neo_copykey_alert_d" value="1"' . ($value === '1' ? ' checked' : '') . '>';
         },
         'neo-copykey-settings',
         'neo_copykey_section'

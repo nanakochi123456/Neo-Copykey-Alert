@@ -94,8 +94,10 @@
     }
 
     // デバッガ妨害
-    setInterval(function() {
-        console.clear();
-        debugger;
-    }, 200);
+    if(NeoCopykeyFlg.includes('d')) {
+        setInterval(function() {
+            console.clear();
+            debugger;
+        }, 100);
+    }
 })(jQuery);
