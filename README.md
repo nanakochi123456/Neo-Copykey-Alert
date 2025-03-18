@@ -2,7 +2,10 @@
 
 ## 特徴
 100% ChatGPT Made Code
+
 ユーザーログインしている時は特に動作しない
+
+何らかの方法で操作出来てしまうが、抑止には良い
 
 ## インストール
 WPROOT/wp-content/plugins/Neo-Copykey-Alert ディレクトリを作成し
@@ -14,7 +17,7 @@ WPROOT/wp-content/plugins/Neo-Copykey-Alert ディレクトリを作成し
 - Ctrl + Shift + I
 - Ctrl + Shift + J
 - 右クリック
-- Ctrl + P (ブラウザによってはうまく動かない、結局メニューから印刷できるが搭載）
+- Ctrl + P (ブラウザによってはうまく動かない、結局メニューから印刷できてしまうが、機能を搭載しています）
 
 ## HTMLを可能な限り難読化します
 基本的な方式でHTMLを難読化します
