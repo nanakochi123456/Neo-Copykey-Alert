@@ -49,5 +49,4 @@ $value = str_replace('$IP', $user_ip, $value);
 $value = str_replace('$URL', $_POST["url"], $value);
 $value = str_replace('$KEY', $_POST["key"], $value);
 $value = str_replace('\\n', "\n", $value);
-echo $value;
-
+echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8'); // alert で表示

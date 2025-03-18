@@ -2,13 +2,17 @@
 /*
 Plugin Name: Neo Copykey Alert
 Description: 記事の右クリックや選択、ソースコード表示時などに警告を出す + HTML難読化
-Version: 0.41
+Version: 0.42
 Author: Nano Yozakura
 */
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 add_action('wp_head', function() {
     ?>
-    <script>var NeoCopykeyAjax="<?php echo plugins_url('Neo-ajax-handler.php', __FILE__);?>",NeoCopykeyCk="<?php echo plugins_url('Neo-Ck.php', __FILE__);?>";</script>
+<script>var NeoCopykeyAjax="<?php echo plugins_url('Neo-ajax-handler.php', __FILE__);?>",NeoCopykeyCk="<?php echo plugins_url('Neo-Ck.php', __FILE__);?>";</script>
     <?php
 }, 99);
 
@@ -168,7 +172,6 @@ EOM;
     }
 
 }
-
 
 // 設定ページを追加
 add_action('admin_menu', function() {

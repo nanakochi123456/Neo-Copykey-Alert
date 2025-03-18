@@ -1,7 +1,8 @@
 # Free Wordpress Copykey Alert
 
 ## 特徴
-日本人がChatGPTで作ったコード
+100% ChatGPT Made Code
+ユーザーログインしている時は特に動作しない
 
 ## インストール
 WPROOT/wp-content/plugins/Neo-Copykey-Alert ディレクトリを作成し
@@ -36,6 +37,8 @@ IPV4環境でのみ確認していますが、IPV6でも動作するはずです
 - 無効化して削除
 
 ## バージョン履歴
+v0.42 - alertで表示される文面をエスケープ
+
 v0.41 - 転送先のURLがNULLになることがあることを修正
 
 v0.4 - 警告メッセージを変更できるようにした、転送先URLを変更できるようにした

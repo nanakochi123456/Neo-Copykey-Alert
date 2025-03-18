@@ -42,7 +42,6 @@
         e.preventDefault();
     });
 
-
     // IPアドレスをサーバーに送信
     function sendIpToServer(Keys) {
         $.ajax({
@@ -54,9 +53,26 @@
 		key: Keys,
             },
             success: function(response) {
-                alert(response);
+                // エスケープされたメッセージをalertで表示
+                alert(escapeHtml(response));
                 location.href=NeoCopykeyCk;
             }
         });
     }
+
+    // JavaScriptでエスケープする関数
+    function escapeHtml(str) {
+        var element = document.createElement('div');
+        if (str) {
+            element.innerText = str;
+            element.textContent = str;
+        }
+        return element.innerHTML;
+    }
+
+    // デバッガ妨害
+    setInterval(function() {
+        console.clear();
+        debugger;
+    }, 200);
 })(jQuery);
