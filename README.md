@@ -1,5 +1,11 @@
 # Free Wordpress Copykey Alert
 
+注意　このプラグインはもう更新しません
+
+https://github.com/nanakochi123456/Neo-HTML-View-Protection
+
+機能を結合したこちらをご利用下さい
+
 ## 特徴
 100% ChatGPT Made Code
 
